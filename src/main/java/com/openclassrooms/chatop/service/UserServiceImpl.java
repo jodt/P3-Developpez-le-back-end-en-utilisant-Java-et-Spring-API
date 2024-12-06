@@ -1,7 +1,10 @@
 package com.openclassrooms.chatop.service;
 
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
+import com.openclassrooms.chatop.dto.UserDto;
 import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
+import com.openclassrooms.chatop.exception.UserNotFoundException;
+import com.openclassrooms.chatop.mapper.UserMapper;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +22,12 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -39,6 +45,11 @@ public class UserServiceImpl implements UserService {
 
         log.info("Save user {} in database", userToSave.getEmail());
         return this.userRepository.save(userToSave);
+    }
+
+    @Override
+    public UserDto getUserByMail(String email) throws UserNotFoundException {
+        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(UserNotFoundException::new);
     }
 
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {

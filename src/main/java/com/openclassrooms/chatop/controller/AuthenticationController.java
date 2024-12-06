@@ -3,8 +3,9 @@ package com.openclassrooms.chatop.controller;
 import com.openclassrooms.chatop.dto.AuthSuccessDto;
 import com.openclassrooms.chatop.dto.LoginRequestDto;
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
+import com.openclassrooms.chatop.dto.UserDto;
 import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
-import com.openclassrooms.chatop.model.User;
+import com.openclassrooms.chatop.exception.UserNotFoundException;
 import com.openclassrooms.chatop.service.AuthenticationService;
 import com.openclassrooms.chatop.service.JwtService;
 import com.openclassrooms.chatop.service.UserService;
@@ -13,12 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -26,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+
     private final UserService userService;
+
     private final JwtService jwtService;
 
     public AuthenticationController(AuthenticationService authenticationService, UserService userService, JwtService jwtService) {
@@ -41,7 +39,7 @@ public class AuthenticationController {
 
         log.info("POST /login called -> start the process to log in the user");
 
-        Authentication authentication =  this.authenticationService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        Authentication authentication = this.authenticationService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
         AuthSuccessDto token = AuthSuccessDto.builder()
                 .token(this.jwtService.generateJwtToken(authentication.getName()))
@@ -64,6 +62,14 @@ public class AuthenticationController {
 
         log.info("User registered successfully");
         return new ResponseEntity<>(token, HttpStatus.OK);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> userInfo(Authentication authentication) throws UserNotFoundException {
+        log.info("GET /me called -> start the process to get user info for user with mail {}", authentication.getName());
+        UserDto userInfo = this.userService.getUserByMail(authentication.getName());
+        log.info("user information retrieved successfully ");
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
 }
