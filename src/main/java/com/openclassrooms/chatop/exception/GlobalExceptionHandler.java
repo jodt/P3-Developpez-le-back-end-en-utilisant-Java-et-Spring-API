@@ -12,20 +12,25 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ResponseDto> handleBadCredentialsException(BadCredentialsException ex){
+    public ResponseEntity<ResponseDto> handleBadCredentialsException(BadCredentialsException ex) {
         ResponseDto response = ResponseDto.builder().message("error").build();
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
-    public ResponseEntity<ResponseDto> handleBadCredentialsException(UserAlreadyRegisteredException ex){
+    public ResponseEntity<ResponseDto> handleBadCredentialsException(UserAlreadyRegisteredException ex) {
         ResponseDto response = ResponseDto.builder().message("user already registered").build();
-        return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+    public ResponseEntity<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Void> handleMethodArgumentNotValidException(UserNotFoundException ex) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
