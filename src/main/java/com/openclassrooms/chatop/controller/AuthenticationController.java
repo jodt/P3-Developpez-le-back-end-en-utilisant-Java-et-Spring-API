@@ -5,7 +5,7 @@ import com.openclassrooms.chatop.dto.LoginRequestDto;
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
 import com.openclassrooms.chatop.dto.UserDto;
 import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
-import com.openclassrooms.chatop.exception.UserNotFoundException;
+import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.service.AuthenticationService;
 import com.openclassrooms.chatop.service.JwtService;
 import com.openclassrooms.chatop.service.UserService;
@@ -65,7 +65,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserDto> userInfo(Authentication authentication) throws UserNotFoundException {
+    public ResponseEntity<UserDto> userInfo(Authentication authentication) throws ResourceNotFoundException {
         log.info("GET /me called -> start the process to get user info for user with mail {}", authentication.getName());
         UserDto userInfo = this.userService.getUserByMail(authentication.getName());
         log.info("user information retrieved successfully ");

@@ -3,7 +3,7 @@ package com.openclassrooms.chatop.service;
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
 import com.openclassrooms.chatop.dto.UserDto;
 import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
-import com.openclassrooms.chatop.exception.UserNotFoundException;
+import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.mapper.UserMapper;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByMail(String email) throws UserNotFoundException {
-        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(UserNotFoundException::new);
+    public UserDto getUserByMail(String email) throws ResourceNotFoundException {
+        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(ResourceNotFoundException::new);
     }
 
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {
