@@ -2,15 +2,14 @@ package com.openclassrooms.chatop.controller;
 
 import com.openclassrooms.chatop.dto.RentalDto;
 import com.openclassrooms.chatop.dto.RentalsDto;
+import com.openclassrooms.chatop.dto.ResponseDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.service.RentalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -37,5 +36,14 @@ public class RentalController {
         RentalDto rental = this.rentalService.getRentalById(id);
         log.info("Rental with id {} retrieved successfully", id);
         return new ResponseEntity<>(rental, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResponseDto> createRental(@RequestBody RentalDto rentalDto, Authentication authentication) throws ResourceNotFoundException {
+        log.info("POST /rentals called -> start the process to add a new rental");
+        this.rentalService.createRental(rentalDto, authentication.getName());
+        log.info("Rental created successfully");
+        ResponseDto response = ResponseDto.builder().message("Rental created !").build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

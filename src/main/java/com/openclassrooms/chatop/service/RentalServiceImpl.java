@@ -9,8 +9,8 @@ import com.openclassrooms.chatop.repository.RentalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -18,10 +18,12 @@ import java.util.stream.Collectors;
 public class RentalServiceImpl implements RentalService {
 
     private final RentalRepository rentalRepository;
+    private final UserService userService;
     private final RentalMapper rentalMapper;
 
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalMapper rentalMapper) {
+    public RentalServiceImpl(RentalRepository rentalRepository, UserService userService, RentalMapper rentalMapper) {
         this.rentalRepository = rentalRepository;
+        this.userService = userService;
         this.rentalMapper = rentalMapper;
     }
 
@@ -44,5 +46,16 @@ public class RentalServiceImpl implements RentalService {
             log.info("Rental with id {} not found", id);
             return new ResourceNotFoundException();
         });
+    }
+
+    @Override
+    public Rental createRental(RentalDto rentalDto, String userMail) throws ResourceNotFoundException {
+        Rental newRental = this.rentalMapper.asRental(rentalDto);
+        int userId = this.userService.getUserIdByEmail(userMail);
+        LocalDate now = LocalDate.now();
+        newRental.setCreatedAt(now);
+        newRental.setUpdatedAt(now);
+        newRental.setOwnerId(userId);
+        return this.rentalRepository.save(newRental);
     }
 }

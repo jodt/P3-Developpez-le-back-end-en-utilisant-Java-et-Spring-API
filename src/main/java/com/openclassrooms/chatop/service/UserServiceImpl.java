@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(ResourceNotFoundException::new);
     }
 
+    @Override
+    public int getUserIdByEmail(String email) throws ResourceNotFoundException {
+        return this.userRepository.findByEmail(email).map(User::getId).orElseThrow(ResourceNotFoundException::new);
+    }
+
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {
         Optional<User> user = this.userRepository.findByEmail(email);
         if (user.isPresent()) {

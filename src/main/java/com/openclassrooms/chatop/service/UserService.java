@@ -11,4 +11,6 @@ public interface UserService {
     User addUser(RegisterRequestDto registerRequest) throws UserAlreadyRegisteredException;
 
     UserDto getUserByMail(String email) throws ResourceNotFoundException;
+
+    int getUserIdByEmail (String email) throws ResourceNotFoundException;
 }
