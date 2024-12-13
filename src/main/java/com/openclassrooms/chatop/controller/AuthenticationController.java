@@ -67,7 +67,7 @@ public class AuthenticationController {
     @GetMapping("/me")
     public ResponseEntity<UserDto> userInfo(Authentication authentication) throws ResourceNotFoundException {
         log.info("GET /me called -> start the process to get user info for user with mail {}", authentication.getName());
-        UserDto userInfo = this.userService.getUserByMail(authentication.getName());
+        UserDto userInfo = this.userService.getUserDtoByMail(authentication.getName());
         log.info("user information retrieved successfully ");
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }

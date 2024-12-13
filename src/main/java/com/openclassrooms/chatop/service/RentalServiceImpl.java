@@ -5,6 +5,7 @@ import com.openclassrooms.chatop.dto.RentalsDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.mapper.RentalMapper;
 import com.openclassrooms.chatop.model.Rental;
+import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.RentalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,12 +51,13 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Rental createRental(RentalDto rentalDto, String userMail) throws ResourceNotFoundException {
+        log.info("Try to create new rental for the user {}", userMail);
         Rental newRental = this.rentalMapper.asRental(rentalDto);
-        int userId = this.userService.getUserIdByEmail(userMail);
+        User user = this.userService.getUserByMail(userMail);
         LocalDate now = LocalDate.now();
         newRental.setCreatedAt(now);
         newRental.setUpdatedAt(now);
-        newRental.setOwnerId(userId);
+        newRental.setUser(user);
         return this.rentalRepository.save(newRental);
     }
 }

@@ -49,22 +49,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByMail(String email) throws ResourceNotFoundException {
+    public User getUserByMail(String email) throws ResourceNotFoundException {
         log.info("Try to get user with mail {}", email);
-        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(() -> {
+        return this.userRepository.findByEmail(email).orElseThrow(() -> {
             log.error("USer with mail {} not found", email);
             return new ResourceNotFoundException();
         });
     }
 
     @Override
-    public int getUserIdByEmail(String email) throws ResourceNotFoundException {
-        log.info("Try to get user id with mail {}", email);
-        return this.userRepository.findByEmail(email).map(User::getId).orElseThrow(()-> {
-            log.error("User with mail {} not found", email);
+    public UserDto getUserDtoByMail(String email) throws ResourceNotFoundException {
+        log.info("Try to get user with mail {}", email);
+        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(() -> {
+            log.error("USer with mail {} not found", email);
             return new ResourceNotFoundException();
-                }
-        );
+        });
     }
 
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {
