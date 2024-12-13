@@ -43,7 +43,7 @@ public class RentalServiceImpl implements RentalService {
     public RentalDto getRentalById(int id) throws ResourceNotFoundException {
         log.info("Try to retrieve rental with id {}", id);
         return this.rentalRepository.findById(id).map(this.rentalMapper::asRentalDto).orElseThrow(() -> {
-            log.info("Rental with id {} not found", id);
+            log.error("Rental with id {} not found", id);
             return new ResourceNotFoundException();
         });
     }

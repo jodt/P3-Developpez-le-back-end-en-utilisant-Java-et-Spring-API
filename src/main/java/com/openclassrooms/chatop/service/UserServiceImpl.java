@@ -7,6 +7,7 @@ import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.mapper.UserMapper;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,12 +50,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByMail(String email) throws ResourceNotFoundException {
-        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(ResourceNotFoundException::new);
+        log.info("Try to get user with mail {}", email);
+        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(() -> {
+            log.error("USer with mail {} not found", email);
+            return new ResourceNotFoundException();
+        });
     }
 
     @Override
     public int getUserIdByEmail(String email) throws ResourceNotFoundException {
-        return this.userRepository.findByEmail(email).map(User::getId).orElseThrow(ResourceNotFoundException::new);
+        log.info("Try to get user id with mail {}", email);
+        return this.userRepository.findByEmail(email).map(User::getId).orElseThrow(()-> {
+            log.error("User with mail {} not found", email);
+            return new ResourceNotFoundException();
+                }
+        );
     }
 
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {
