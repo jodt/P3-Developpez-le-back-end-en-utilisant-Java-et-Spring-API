@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.service;
 
 import com.openclassrooms.chatop.dto.RentalDto;
+import com.openclassrooms.chatop.dto.RentalResponseDto;
 import com.openclassrooms.chatop.dto.RentalsDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.mapper.RentalMapper;
@@ -33,17 +34,17 @@ public class RentalServiceImpl implements RentalService {
         log.info("Try to retrieve all rentals");
         List<Rental> rentals = this.rentalRepository.findAll();
 
-        List<RentalDto> allRentals = rentals.stream()
-                    .map(rentalMapper::asRentalDto)
+        List<RentalResponseDto> allRentals = rentals.stream()
+                    .map(rentalMapper::asRentalResponseDto)
                     .toList();
 
         return RentalsDto.builder().rentals(allRentals).build();
     }
 
     @Override
-    public RentalDto getRentalById(int id) throws ResourceNotFoundException {
+    public RentalResponseDto getRentalById(int id) throws ResourceNotFoundException {
         log.info("Try to retrieve rental with id {}", id);
-        return this.rentalRepository.findById(id).map(this.rentalMapper::asRentalDto).orElseThrow(() -> {
+        return this.rentalRepository.findById(id).map(this.rentalMapper::asRentalResponseDto).orElseThrow(() -> {
             log.error("Rental with id {} not found", id);
             return new ResourceNotFoundException();
         });

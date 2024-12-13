@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class RentalsDto {
 
-    private List<RentalDto> rentals;
+    private List<RentalResponseDto> rentals;
 
 }

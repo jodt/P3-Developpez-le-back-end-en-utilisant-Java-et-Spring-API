@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.controller;
 
-import com.openclassrooms.chatop.dto.RentalDto;
+import com.openclassrooms.chatop.dto.RentalCreateDto;
+import com.openclassrooms.chatop.dto.RentalResponseDto;
 import com.openclassrooms.chatop.dto.RentalsDto;
 import com.openclassrooms.chatop.dto.ResponseDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
@@ -31,17 +32,17 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RentalDto> getRentalById(@PathVariable int id) throws ResourceNotFoundException {
+    public ResponseEntity<RentalResponseDto> getRentalById(@PathVariable int id) throws ResourceNotFoundException {
         log.info("GET /rental/{} called -> start the process to retrieve rental with id {}", id, id);
-        RentalDto rental = this.rentalService.getRentalById(id);
+        RentalResponseDto rental = this.rentalService.getRentalById(id);
         log.info("Rental with id {} retrieved successfully", id);
         return new ResponseEntity<>(rental, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createRental(@RequestBody RentalDto rentalDto, Authentication authentication) throws ResourceNotFoundException {
+    public ResponseEntity<ResponseDto> createRental(@RequestBody RentalCreateDto rentalCreateDto, Authentication authentication) throws ResourceNotFoundException {
         log.info("POST /rentals called -> start the process to add a new rental");
-        this.rentalService.createRental(rentalDto, authentication.getName());
+        this.rentalService.createRental(rentalCreateDto, authentication.getName());
         log.info("Rental created successfully");
         ResponseDto response = ResponseDto.builder().message("Rental created !").build();
         return new ResponseEntity<>(response, HttpStatus.OK);
