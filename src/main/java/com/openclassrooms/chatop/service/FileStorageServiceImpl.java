@@ -42,7 +42,7 @@ public class FileStorageServiceImpl implements FileStorageService{
         }
 
         Path filePath = this.defineFilePath(ownerPath,rentalId, extension);
-        log.info(filePath.toString());
+        log.info("save the file to this location {}",filePath);
 
         file.transferTo(filePath);
 
