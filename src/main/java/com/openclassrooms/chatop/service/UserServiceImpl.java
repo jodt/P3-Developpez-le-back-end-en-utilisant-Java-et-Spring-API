@@ -3,10 +3,11 @@ package com.openclassrooms.chatop.service;
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
 import com.openclassrooms.chatop.dto.UserDto;
 import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
-import com.openclassrooms.chatop.exception.UserNotFoundException;
+import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.mapper.UserMapper;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserByMail(String email) throws UserNotFoundException {
-        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(UserNotFoundException::new);
+    public User getUserByMail(String email) throws ResourceNotFoundException {
+        log.info("Try to get user with mail {}", email);
+        return this.userRepository.findByEmail(email).orElseThrow(() -> {
+            log.error("USer with mail {} not found", email);
+            return new ResourceNotFoundException();
+        });
+    }
+
+    @Override
+    public UserDto getUserDtoByMail(String email) throws ResourceNotFoundException {
+        log.info("Try to get user with mail {}", email);
+        return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(() -> {
+            log.error("USer with mail {} not found", email);
+            return new ResourceNotFoundException();
+        });
     }
 
     private void isUserAlreadyRegister(String email) throws UserAlreadyRegisteredException {

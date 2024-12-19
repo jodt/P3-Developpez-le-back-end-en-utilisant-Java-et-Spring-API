@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
-    public ResponseEntity<ResponseDto> handleBadCredentialsException(UserAlreadyRegisteredException ex) {
+    public ResponseEntity<ResponseDto> handleUserAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
         ResponseDto response = ResponseDto.builder().message("user already registered").build();
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
@@ -28,10 +28,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Void> handleMethodArgumentNotValidException(UserNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Void> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
 }
