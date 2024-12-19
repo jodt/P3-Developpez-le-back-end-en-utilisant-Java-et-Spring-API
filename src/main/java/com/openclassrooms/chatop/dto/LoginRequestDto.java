@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class LoginRequestDto {
 
-    String email;
+    private String email;
 
-    String password;
+    private String password;
 
 }

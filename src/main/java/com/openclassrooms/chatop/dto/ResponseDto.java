@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class ResponseDto {
 
-    String message;
+    private String message;
 
 }

@@ -12,13 +12,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UserDto {
 
-    int id;
+    private int id;
 
-    String email;
+    private String email;
 
-    String name;
+    private String name;
 
-    LocalDate createdAt;
+    private LocalDate createdAt;
 
-    LocalDate updatedAt;
+    private LocalDate updatedAt;
 }

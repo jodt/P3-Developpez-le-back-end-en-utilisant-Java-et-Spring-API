@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AuthSuccessDto {
 
-    String token;
+    private String token;
 }
