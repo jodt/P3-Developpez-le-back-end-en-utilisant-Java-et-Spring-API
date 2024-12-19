@@ -61,7 +61,15 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserDtoByMail(String email) throws ResourceNotFoundException {
         log.info("Try to get user with mail {}", email);
         return this.userRepository.findByEmail(email).map(userMapper::asUserDto).orElseThrow(() -> {
-            log.error("USer with mail {} not found", email);
+            log.error("User with mail {} not found", email);
+            return new ResourceNotFoundException();
+        });
+    }
+
+    @Override
+    public UserDto getUserById(int id) throws ResourceNotFoundException {
+        return this.userRepository.findById(id).map(userMapper::asUserDto).orElseThrow(() -> {
+            log.error("User with id {} not found", id);
             return new ResourceNotFoundException();
         });
     }
