@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.service;
 
 import com.openclassrooms.chatop.dto.RentalCreateDto;
+import com.openclassrooms.chatop.dto.RentalDto;
 import com.openclassrooms.chatop.dto.RentalResponseDto;
 import com.openclassrooms.chatop.dto.RentalsDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -78,5 +80,29 @@ public class RentalServiceImpl implements RentalService {
 
         rentalSaved.setPicture(filePath);
         return this.rentalRepository.save(rentalSaved);
+    }
+
+    @Override
+    public void updateRental(int id, RentalDto rentalUpdated) throws ResourceNotFoundException {
+        log.info("Try to update rental with id {}", id);
+        Optional<Rental> rental = this.rentalRepository.findById(id);
+
+        if(rental.isPresent()) {
+            Rental rentalToUpdate = rental.get();
+            this.updateRentalWithNewData(rentalToUpdate, rentalUpdated);
+            this.rentalRepository.save(rentalToUpdate);
+        } else {
+            log.error("Rental with id {} not found", id);
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    private void updateRentalWithNewData(Rental rentalToUpdate, RentalDto rentalUpdated) {
+        log.info("Update rental with id {} with new data", rentalToUpdate.getId());
+        rentalToUpdate.setName(rentalUpdated.getName());
+        rentalToUpdate.setSurface(rentalUpdated.getSurface());
+        rentalToUpdate.setPrice(rentalUpdated.getPrice());
+        rentalToUpdate.setDescription(rentalUpdated.getDescription());
+        rentalToUpdate.setUpdatedAt(LocalDate.now());
     }
 }

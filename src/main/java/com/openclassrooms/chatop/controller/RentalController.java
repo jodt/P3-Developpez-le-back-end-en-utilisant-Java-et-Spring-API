@@ -1,9 +1,6 @@
 package com.openclassrooms.chatop.controller;
 
-import com.openclassrooms.chatop.dto.RentalCreateDto;
-import com.openclassrooms.chatop.dto.RentalResponseDto;
-import com.openclassrooms.chatop.dto.RentalsDto;
-import com.openclassrooms.chatop.dto.ResponseDto;
+import com.openclassrooms.chatop.dto.*;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
 import com.openclassrooms.chatop.service.RentalService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +42,15 @@ public class RentalController {
         this.rentalService.createRental(rentalCreateDto, authentication.getName());
         log.info("Rental created successfully");
         ResponseDto response = ResponseDto.builder().message("Rental created !").build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ResponseDto> updateRental(@PathVariable int id, @ModelAttribute RentalDto rentalUpdated) throws ResourceNotFoundException {
+        log.info("PUT /rental/{} called -> start the process to update rental with id {}", id, id);
+        this.rentalService.updateRental(id, rentalUpdated);
+        log.info("Rental updated successfully");
+        ResponseDto response = ResponseDto.builder().message("Rental updated !").build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
