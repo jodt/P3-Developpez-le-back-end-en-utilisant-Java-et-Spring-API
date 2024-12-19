@@ -40,7 +40,7 @@ public class RentalController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createRental(@RequestBody RentalCreateDto rentalCreateDto, Authentication authentication) throws ResourceNotFoundException {
+    public ResponseEntity<ResponseDto> createRental(@ModelAttribute RentalCreateDto rentalCreateDto, Authentication authentication) throws ResourceNotFoundException {
         log.info("POST /rentals called -> start the process to add a new rental");
         this.rentalService.createRental(rentalCreateDto, authentication.getName());
         log.info("Rental created successfully");
