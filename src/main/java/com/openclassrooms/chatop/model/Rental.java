@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,28 +20,28 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NonNull
+    @NotNull
     private String name;
 
-    @NonNull
+    @NotNull
     private double surface;
 
-    @NonNull
+    @NotNull
     private double price;
 
-    @NonNull
     private String picture;
 
-    @NonNull
+    @NotNull
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @NotNull
     private User user;
 
-    @NonNull
+    @NotNull
     private LocalDate createdAt;
-    @NonNull
+    @NotNull
     private LocalDate updatedAt;
 
 }
