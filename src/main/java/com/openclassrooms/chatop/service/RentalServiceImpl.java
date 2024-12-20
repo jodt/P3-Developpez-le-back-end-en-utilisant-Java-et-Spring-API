@@ -50,9 +50,18 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public RentalResponseDto getRentalById(int id) throws ResourceNotFoundException {
+    public RentalResponseDto getRentalDtoById(int id) throws ResourceNotFoundException {
         log.info("Try to retrieve rental with id {}", id);
         return this.rentalRepository.findById(id).map(this.rentalMapper::asRentalResponseDto).orElseThrow(() -> {
+            log.error("Rental with id {} not found", id);
+            return new ResourceNotFoundException();
+        });
+    }
+
+    @Override
+    public Rental getRentalById(int id) throws ResourceNotFoundException {
+        log.info("Try to retrieve rental with id {}", id);
+        return this.rentalRepository.findById(id).orElseThrow(() -> {
             log.error("Rental with id {} not found", id);
             return new ResourceNotFoundException();
         });

@@ -11,7 +11,9 @@ public interface RentalService {
 
     RentalsDto getAllRentals ();
 
-    RentalResponseDto getRentalById (int id) throws ResourceNotFoundException;
+    RentalResponseDto getRentalDtoById(int id) throws ResourceNotFoundException;
+
+    Rental getRentalById(int id) throws ResourceNotFoundException;
 
     Rental createRental (RentalCreateDto newRental, String userMail) throws ResourceNotFoundException;
 

@@ -31,7 +31,7 @@ public class RentalController {
     @GetMapping("/{id}")
     public ResponseEntity<RentalResponseDto> getRentalById(@PathVariable int id) throws ResourceNotFoundException {
         log.info("GET /rental/{} called -> start the process to retrieve rental with id {}", id, id);
-        RentalResponseDto rental = this.rentalService.getRentalById(id);
+        RentalResponseDto rental = this.rentalService.getRentalDtoById(id);
         log.info("Rental with id {} retrieved successfully", id);
         return new ResponseEntity<>(rental, HttpStatus.OK);
     }
