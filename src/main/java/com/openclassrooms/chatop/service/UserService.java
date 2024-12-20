@@ -14,6 +14,8 @@ public interface UserService {
 
     UserDto getUserDtoByMail(String email) throws ResourceNotFoundException;
 
-    UserDto getUserById(int id) throws ResourceNotFoundException;
+    UserDto getUserDtoById(int id) throws ResourceNotFoundException;
+
+    User getUserById(int id) throws ResourceNotFoundException;
 
 }

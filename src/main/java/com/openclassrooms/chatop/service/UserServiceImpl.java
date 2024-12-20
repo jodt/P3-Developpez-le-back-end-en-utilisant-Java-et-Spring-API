@@ -67,8 +67,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(int id) throws ResourceNotFoundException {
+    public UserDto getUserDtoById(int id) throws ResourceNotFoundException {
         return this.userRepository.findById(id).map(userMapper::asUserDto).orElseThrow(() -> {
+            log.error("User with id {} not found", id);
+            return new ResourceNotFoundException();
+        });
+    }
+
+    @Override
+    public User getUserById(int id) throws ResourceNotFoundException {
+        return this.userRepository.findById(id).orElseThrow(() -> {
             log.error("User with id {} not found", id);
             return new ResourceNotFoundException();
         });

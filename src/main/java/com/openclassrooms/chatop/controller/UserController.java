@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable int id) throws ResourceNotFoundException {
-        return new ResponseEntity<>(this.userService.getUserById(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.getUserDtoById(id), HttpStatus.OK);
     }
 
 }
