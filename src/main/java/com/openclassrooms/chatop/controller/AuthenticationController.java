@@ -1,14 +1,18 @@
 package com.openclassrooms.chatop.controller;
 
-import com.openclassrooms.chatop.dto.AuthSuccessDto;
-import com.openclassrooms.chatop.dto.LoginRequestDto;
-import com.openclassrooms.chatop.dto.RegisterRequestDto;
-import com.openclassrooms.chatop.dto.UserDto;
-import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
+import com.openclassrooms.chatop.dto.*;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
+import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
 import com.openclassrooms.chatop.service.AuthenticationService;
 import com.openclassrooms.chatop.service.JwtService;
 import com.openclassrooms.chatop.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,6 +38,13 @@ public class AuthenticationController {
         this.jwtService = jwtService;
     }
 
+    @Operation(summary = "Generate a token", description = "Generate a token when user tries to login if authenticated")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = AuthSuccessDto.class))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content(mediaType = "application/json",
+                    examples = @ExampleObject(value = "{ \"message\": \"error\" }"),
+                    schema = @Schema(implementation = ResponseDto.class)))})
     @PostMapping("/login")
     public ResponseEntity<AuthSuccessDto> login(@RequestBody LoginRequestDto loginRequest) {
 
@@ -49,6 +60,11 @@ public class AuthenticationController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
+    @Operation(summary = "Register a new user", description = "Register a new user in the database and generate a token for them")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = AuthSuccessDto.class))}),
+            @ApiResponse(responseCode = "400", content = @Content(mediaType = "application/json"))})
     @PostMapping("/register")
     public ResponseEntity<AuthSuccessDto> register(@Valid @RequestBody RegisterRequestDto registerRequest) throws UserAlreadyRegisteredException {
 
@@ -64,6 +80,13 @@ public class AuthenticationController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get user information", description = "Return logged in user information")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = UserDto.class))}),
+            @ApiResponse(responseCode = "401", content = {@Content(schema = @Schema())})
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/me")
     public ResponseEntity<UserDto> userInfo(Authentication authentication) throws ResourceNotFoundException {
         log.info("GET /me called -> start the process to get user info for user with mail {}", authentication.getName());
