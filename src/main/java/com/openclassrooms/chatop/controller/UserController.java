@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 @RequestMapping("api/user")
 public class UserController {
 
@@ -36,6 +38,7 @@ public class UserController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<UserDto> getUser(@Parameter(description = "User ID", example = "1") @PathVariable int id) throws ResourceNotFoundException {
+        log.info("GET api/user/{} called -> start the process to retrieve user information for user with id {}", id, id);
         return new ResponseEntity<>(this.userService.getUserDtoById(id), HttpStatus.OK);
     }
 

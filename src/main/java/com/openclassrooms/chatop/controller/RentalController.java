@@ -38,7 +38,7 @@ public class RentalController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<RentalsDto> getAllRentals() {
-        log.info("GET /rentals called -> start the process to retrieve all rentals");
+        log.info("GET api/rentals called -> start the process to retrieve all rentals");
         RentalsDto allRentals = this.rentalService.getAllRentals();
         log.info("All rentals retrieved successfully");
         return new ResponseEntity<>(allRentals, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class RentalController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<RentalResponseDto> getRentalById(@Parameter(description = "Rental ID", example = "1") @PathVariable int id) throws ResourceNotFoundException {
-        log.info("GET /rental/{} called -> start the process to retrieve rental with id {}", id, id);
+        log.info("GET api/rentals/{} called -> start the process to retrieve rental with id {}", id, id);
         RentalResponseDto rental = this.rentalService.getRentalDtoById(id);
         log.info("Rental with id {} retrieved successfully", id);
         return new ResponseEntity<>(rental, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class RentalController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> createRental(@Valid @ModelAttribute RentalCreateDto rentalCreateDto, Authentication authentication) throws ResourceNotFoundException {
-        log.info("POST /rentals called -> start the process to add a new rental");
+        log.info("POST api/rentals called -> start the process to add a new rental");
         this.rentalService.createRental(rentalCreateDto, authentication.getName());
         log.info("Rental created successfully");
         ResponseDto response = ResponseDto.builder().message("Rental created !").build();
@@ -86,7 +86,7 @@ public class RentalController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<ResponseDto> updateRental(@Parameter(description = "Rental ID", example = "1") @PathVariable int id, @Valid @ModelAttribute RentalDto rentalUpdated) throws ResourceNotFoundException {
-        log.info("PUT /rental/{} called -> start the process to update rental with id {}", id, id);
+        log.info("PUT api/rentals/{} called -> start the process to update rental with id {}", id, id);
         this.rentalService.updateRental(id, rentalUpdated);
         log.info("Rental updated successfully");
         ResponseDto response = ResponseDto.builder().message("Rental updated !").build();

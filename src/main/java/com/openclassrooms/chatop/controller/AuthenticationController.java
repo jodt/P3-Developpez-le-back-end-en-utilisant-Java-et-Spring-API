@@ -48,7 +48,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<AuthSuccessDto> login(@RequestBody LoginRequestDto loginRequest) {
 
-        log.info("POST /login called -> start the process to log in the user");
+        log.info("POST api/auth/login called -> start the process to log in the user");
 
         Authentication authentication = this.authenticationService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
@@ -68,7 +68,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<AuthSuccessDto> register(@Valid @RequestBody RegisterRequestDto registerRequest) throws UserAlreadyRegisteredException {
 
-        log.info("POST /register called -> start the process register a new user with mail {}", registerRequest.getEmail());
+        log.info("POST api/auth/register called -> start the process register a new user with mail {}", registerRequest.getEmail());
 
         this.userService.addUser(registerRequest);
 
@@ -89,7 +89,7 @@ public class AuthenticationController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/me")
     public ResponseEntity<UserDto> userInfo(Authentication authentication) throws ResourceNotFoundException {
-        log.info("GET /me called -> start the process to get user info for user with mail {}", authentication.getName());
+        log.info("GET api/auth/me called -> start the process to get user info for user with mail {}", authentication.getName());
         UserDto userInfo = this.userService.getUserDtoByMail(authentication.getName());
         log.info("user information retrieved successfully ");
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
