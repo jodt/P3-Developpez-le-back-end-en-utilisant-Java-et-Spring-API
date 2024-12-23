@@ -31,6 +31,16 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String jwtKey;
 
+    /**
+     * This method is used to configure the security filter chain which is responsible
+     * for all security (protection of application URLs...)
+     * Each request is filtered to check if the user can access the requested URL.
+     * URLs can be accessible to everyone, or just if the user has sufficient authorizations or if he is authenticated.
+     *
+     * @param http
+     * @return a securityFilterChain
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -49,11 +59,23 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Returns a BCryptPasswordEncoder used ton encode the user password with Bcrypt.
+     *
+     * @return a BCryptPasswordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures an AuthenticationManager bean used to authenticate users based on their credentials
+     *
+     * @param userDetailsService
+     * @param passwordEncoder
+     * @return a configured AuthenticationManager
+     */
     @Bean
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 
@@ -64,11 +86,21 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider);
     }
 
+    /**
+     * Returns a jwtEncoder used to encode a jwt token.
+     *
+     * @return a jwtEncoder
+     */
     @Bean
     public JwtEncoder jwtEncoder() {
         return new NimbusJwtEncoder(new ImmutableSecret<>(this.jwtKey.getBytes()));
     }
 
+    /**
+     * Configure a jwtDecoder to verify the token signature
+     *
+     * @return JwtDecoder
+     */
     @Bean
     JwtDecoder jwtDecoder() {
         SecretKeySpec secretKey = new SecretKeySpec(this.jwtKey.getBytes(), 0, this.jwtKey.getBytes().length, "HmacSHA256");
