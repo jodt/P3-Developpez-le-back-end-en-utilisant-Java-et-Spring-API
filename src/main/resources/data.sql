@@ -1,5 +1,22 @@
 USE chatop;
 
+INSERT INTO USERS
+VALUES (1,
+        'userOne@gmail.com',
+        'firstuser',
+        '$2y$10$eKbdr.2p4by4l/0jMQAuwuZQO9u1sCamy7Rs.9idoqosqy4DRZJMS',
+        NOW(),
+        NOW()
+        ),
+       (2,
+        'userTwo@gmail.com',
+        'seconduser',
+        '$2y$10$eKbdr.2p4by4l/0jMQAuwuZQO9u1sCamy7Rs.9idoqosqy4DRZJMS',
+        NOW(),
+        NOW()
+       )
+    ;
+
 INSERT INTO RENTALS
 VALUES (1,
         'test house 1',
