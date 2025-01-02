@@ -2,12 +2,11 @@ package com.openclassrooms.chatop.service;
 
 import com.openclassrooms.chatop.dto.RegisterRequestDto;
 import com.openclassrooms.chatop.dto.UserDto;
-import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
+import com.openclassrooms.chatop.exception.UserAlreadyRegisteredException;
 import com.openclassrooms.chatop.mapper.UserMapper;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.UserRepository;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
