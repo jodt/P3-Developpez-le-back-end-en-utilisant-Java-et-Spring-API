@@ -53,12 +53,13 @@ This creates a few rentals and two users with the following credentials:
 ```
 #jwt secret key
 jwt.secret="put your secret key here"
+```
 (:warning: use a 256-bit key, you can use an online key generator to do this)
-
+```
 #database
 spring.datasource.url=jdbc:mysql://localhost:3306/chatop?createDatabaseIfNotExist=true
-(:warning: change the mysql port if it's not 3306)
 ```
+(:warning: change the mysql port if it's not 3306)
 
 ### Run the project
 
