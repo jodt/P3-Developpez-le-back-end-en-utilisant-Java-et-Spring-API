@@ -1,7 +1,7 @@
 # CHATOP
 
 Chatop is an application for connecting tenants and owners.
-The backend of the application is developed in JAVA with Spring Boot and the frontend with Angular
+The backend of the application is developed in JAVA with Spring Boot and the frontend with Angular.
 
 ## USING Chatop
 To use Chatop, follow these steps:
@@ -10,37 +10,36 @@ To use Chatop, follow these steps:
 
 ### Prerequisites
 
-* Java 18.0.2.1
-* Mysql 8.3.0
+* Java 18
+* Mysql 8.x.x
 * IDE like Intellij / Eclipse
 
 
-Clone the project : https://github.com/jodt/P3-Developpez-le-back-end-en-utilisant-Java-et-Spring-API
+Clone the project from: [GitHub - Chatop Backend](https://github.com/jodt/P3-Developpez-le-back-end-en-utilisant-Java-et-Spring-API)
 
 ### Database :
 
 * After installing mysql, and setting your username and password, open a terminal and use the command :
 
 ```
-mysql -u *username -p *password*
+mysql -u username -p password
 ```
 
 * Now create the chatop database using the schema.sql file. Copy folder path and use command :
 
 ```
-SOURCE /path_of_the_file
+SOURCE /path/to/schema.sql
 ```
 
 * A second file allows you to insert data into the database to be able to test it directly. To do this, use the
   data.sql file, proceeding in the same way as before :
 
 ```
-SOURCE /path_of_the_file
+SOURCE /path/to/data.sql
 ```
 This creates a few rentals and two users with the following credentials:
 * email : userOne@gmail.com
 * password : azerty
-
 
 
 * email : userTwo@gmail.com
@@ -52,14 +51,14 @@ This creates a few rentals and two users with the following credentials:
 
 ```
 #jwt secret key
-jwt.secret="put your secret key here"
+jwt.secret=Your256BitSecretHere
 ```
-(:warning: use a 256-bit key, you can use an online key generator to do this)
+:warning: use a 256-bit key, you can use an online key generator to do this.
 ```
 #database
 spring.datasource.url=jdbc:mysql://localhost:3306/chatop?createDatabaseIfNotExist=true
 ```
-(:warning: change the mysql port if it's not 3306)
+:warning: change the mysql port if it's not 3306.
 
 ### Run the project
 
@@ -88,8 +87,8 @@ Click the "Authorize" button and paste the token value. You can now test secure 
 
 ### Prerequisites
 
-* Java 20.14.0
-* Angular 18.0.3
+* Node.js
+* Angular 18.x.x
 * IDE VS code / Sublime text
 
 Clone the project : https://github.com/jodt/P3-Developpez-le-back-end-en-utilisant-Java-et-Spring
