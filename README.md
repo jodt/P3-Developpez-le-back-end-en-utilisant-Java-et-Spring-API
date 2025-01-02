@@ -91,7 +91,8 @@ Click the "Authorize" button and paste the token value. You can now test secure 
 * Angular 18.x.x
 * IDE VS code / Sublime text
 
-Clone the project : https://github.com/jodt/P3-Developpez-le-back-end-en-utilisant-Java-et-Spring
+Clone the project from: [GitHub - Chatop Frontend](https://github.com/jodt/P3-Developpez-le-back-end-en-utilisant-Java-et-Spring)
+
 
 ### Run the project
 * Open it in your IDE
