@@ -87,7 +87,7 @@ Click the "Authorize" button and paste the token value. You can now test secure 
 
 ### Prerequisites
 
-* Node.js
+* Node 20.x.x
 * Angular 18.x.x
 * IDE VS code / Sublime text
 
