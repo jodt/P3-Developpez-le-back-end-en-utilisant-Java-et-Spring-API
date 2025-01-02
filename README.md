@@ -96,7 +96,7 @@ Clone the project from: [GitHub - Chatop Frontend](https://github.com/jodt/P3-De
 
 ### Run the project
 * Open it in your IDE
-*install dependencies
+* install dependencies
     ```
     npm install
     ```
