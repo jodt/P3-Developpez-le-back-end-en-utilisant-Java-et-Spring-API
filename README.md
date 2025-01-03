@@ -62,11 +62,28 @@ spring.datasource.url=jdbc:mysql://localhost:3306/chatop?createDatabaseIfNotExis
 
 ### Run the project
 
-* In your terminal, go to your project folder and use the following command :
-```
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.datasource.username=myuser --spring.datasource.password=mypassword"
-```
-:warning: Replace "myuser" with your database username and "mypassword" with your database password
+* In your terminal, go to your project folder and follow the instructions :
+<br></br>
+  - Define two environment variables with these commands :
+  ```
+  export DB_USERNAME=your_username 
+  ```
+  ```
+  export DB_PASSWORD=your_password 
+  ```
+  warning: Replace "your_username" with your database username and "your_password" with your database password
+<br></br>
+- Launch the application with these commands:
+  <br></br>
+  :warning: Make sure the location of the jar file and modify it if necessary in the command
+  ```
+  mvn clean install
+  java -jar target/chatop-0.0.1-SNAPSHOT.jar
+  ```
+  **or**
+  ```
+  mvn spring-boot:run
+  ```
 
 ### API documentation
 
