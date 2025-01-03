@@ -17,6 +17,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UnauthorizedActionException.class)
+    public ResponseEntity<Void> handleUnauthorizedActionException(UnauthorizedActionException ex) {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(UserAlreadyRegisteredException.class)
     public ResponseEntity<ResponseDto> handleUserAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
         ResponseDto response = ResponseDto.builder().message("user already registered").build();

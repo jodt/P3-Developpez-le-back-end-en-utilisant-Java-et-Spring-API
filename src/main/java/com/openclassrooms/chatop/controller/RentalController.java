@@ -2,6 +2,7 @@ package com.openclassrooms.chatop.controller;
 
 import com.openclassrooms.chatop.dto.*;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
+import com.openclassrooms.chatop.exception.UnauthorizedActionException;
 import com.openclassrooms.chatop.service.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -85,7 +86,7 @@ public class RentalController {
             @ApiResponse(responseCode = "401", content = {@Content(schema = @Schema())})
     })
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<ResponseDto> updateRental(@Parameter(description = "Rental ID", example = "1") @PathVariable int id, @Valid @ModelAttribute RentalDto rentalUpdated) throws ResourceNotFoundException {
+    public ResponseEntity<ResponseDto> updateRental(@Parameter(description = "Rental ID", example = "1") @PathVariable int id, @Valid @ModelAttribute RentalDto rentalUpdated) throws ResourceNotFoundException, UnauthorizedActionException {
         log.info("PUT api/rentals/{} called -> start the process to update rental with id {}", id, id);
         this.rentalService.updateRental(id, rentalUpdated);
         log.info("Rental updated successfully");

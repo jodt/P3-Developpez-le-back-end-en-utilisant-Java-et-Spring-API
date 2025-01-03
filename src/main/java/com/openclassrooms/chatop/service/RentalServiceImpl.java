@@ -5,12 +5,14 @@ import com.openclassrooms.chatop.dto.RentalDto;
 import com.openclassrooms.chatop.dto.RentalResponseDto;
 import com.openclassrooms.chatop.dto.RentalsDto;
 import com.openclassrooms.chatop.exception.ResourceNotFoundException;
+import com.openclassrooms.chatop.exception.UnauthorizedActionException;
 import com.openclassrooms.chatop.mapper.RentalMapper;
 import com.openclassrooms.chatop.model.Rental;
 import com.openclassrooms.chatop.model.User;
 import com.openclassrooms.chatop.repository.RentalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -94,12 +96,13 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void updateRental(int id, RentalDto rentalUpdated) throws ResourceNotFoundException {
+    public void updateRental(int id, RentalDto rentalUpdated) throws ResourceNotFoundException, UnauthorizedActionException {
         log.info("Try to update rental with id {}", id);
         Optional<Rental> rental = this.rentalRepository.findById(id);
 
         if (rental.isPresent()) {
             Rental rentalToUpdate = rental.get();
+            this.isUserAllowedToUpdateRental(rentalToUpdate);
             this.updateRentalWithNewData(rentalToUpdate, rentalUpdated);
             this.rentalRepository.save(rentalToUpdate);
         } else {
@@ -115,5 +118,15 @@ public class RentalServiceImpl implements RentalService {
         rentalToUpdate.setPrice(rentalUpdated.getPrice());
         rentalToUpdate.setDescription(rentalUpdated.getDescription());
         rentalToUpdate.setUpdatedAt(LocalDate.now());
+    }
+
+    private void isUserAllowedToUpdateRental(Rental rental) throws UnauthorizedActionException {
+        log.info("Check if user is allowed to update the rental");
+        String loggedUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+        String rentalOwnerMail = rental.getUser().getEmail();
+        if (!loggedUserMail.equals(rentalOwnerMail)) {
+            log.error("The user {} is not allowed to update the rental owned by {}", loggedUserMail, rentalOwnerMail);
+            throw new UnauthorizedActionException();
+        }
     }
 }
