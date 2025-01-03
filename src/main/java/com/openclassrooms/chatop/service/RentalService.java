@@ -9,14 +9,14 @@ import com.openclassrooms.chatop.model.Rental;
 
 public interface RentalService {
 
-    RentalsDto getAllRentals ();
+    RentalsDto getAllRentals();
 
     RentalResponseDto getRentalDtoById(int id) throws ResourceNotFoundException;
 
     Rental getRentalById(int id) throws ResourceNotFoundException;
 
-    Rental createRental (RentalCreateDto newRental, String userMail) throws ResourceNotFoundException;
+    Rental createRental(RentalCreateDto newRental, String userMail) throws ResourceNotFoundException;
 
-    void updateRental (int id, RentalDto rental) throws ResourceNotFoundException;
+    void updateRental(int id, RentalDto rental) throws ResourceNotFoundException;
 
 }

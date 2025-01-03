@@ -40,8 +40,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     /**
      * Saves a file in a local folder and returns its accessible URL.
      *
-     * @param file the file to be saved
-     * @param ownerId the ID of the owner
+     * @param file     the file to be saved
+     * @param ownerId  the ID of the owner
      * @param rentalId the ID of the rental
      * @return the URL of the saved file
      * @throws IOException
@@ -71,7 +71,7 @@ public class FileStorageServiceImpl implements FileStorageService {
      * Defines the file path for a given rental based on the owner's directory and file extension
      *
      * @param ownerPath the directory path of the owner
-     * @param rentalId the ID of the rental
+     * @param rentalId  the ID of the rental
      * @param extension the file extension
      * @return the path to the file
      */

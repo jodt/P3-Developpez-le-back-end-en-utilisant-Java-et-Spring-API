@@ -6,6 +6,6 @@ import com.openclassrooms.chatop.model.Message;
 
 public interface MessageService {
 
-    public Message sendMessage (MessageDto messageDto) throws ResourceNotFoundException;
+    public Message sendMessage(MessageDto messageDto) throws ResourceNotFoundException;
 
 }

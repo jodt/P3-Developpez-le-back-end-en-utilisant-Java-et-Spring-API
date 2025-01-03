@@ -23,8 +23,11 @@ import java.util.Optional;
 public class RentalServiceImpl implements RentalService {
 
     private final RentalRepository rentalRepository;
+
     private final UserService userService;
+
     private final FileStorageService fileStorageService;
+
     private final RentalMapper rentalMapper;
 
     @Value("${image.default}")
@@ -43,8 +46,8 @@ public class RentalServiceImpl implements RentalService {
         List<Rental> rentals = this.rentalRepository.findAll();
 
         List<RentalResponseDto> allRentals = rentals.stream()
-                    .map(rentalMapper::asRentalResponseDto)
-                    .toList();
+                .map(rentalMapper::asRentalResponseDto)
+                .toList();
 
         return RentalsDto.builder().rentals(allRentals).build();
     }
@@ -81,9 +84,8 @@ public class RentalServiceImpl implements RentalService {
 
         String filePath;
         try {
-             filePath = this.fileStorageService.saveFile(rentalToCreate.getPicture(), user.getId(),rentalSaved.getId());
-        }
-        catch (Exception ex) {
+            filePath = this.fileStorageService.saveFile(rentalToCreate.getPicture(), user.getId(), rentalSaved.getId());
+        } catch (Exception ex) {
             filePath = DEFAUT_IMAGE;
         }
 
@@ -96,7 +98,7 @@ public class RentalServiceImpl implements RentalService {
         log.info("Try to update rental with id {}", id);
         Optional<Rental> rental = this.rentalRepository.findById(id);
 
-        if(rental.isPresent()) {
+        if (rental.isPresent()) {
             Rental rentalToUpdate = rental.get();
             this.updateRentalWithNewData(rentalToUpdate, rentalUpdated);
             this.rentalRepository.save(rentalToUpdate);

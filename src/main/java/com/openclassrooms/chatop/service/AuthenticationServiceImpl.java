@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
         log.info("Check user authentication");
-        Authentication authentication =  this.authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
         return authentication;
     }

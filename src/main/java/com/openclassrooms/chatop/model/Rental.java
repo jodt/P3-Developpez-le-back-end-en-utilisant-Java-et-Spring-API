@@ -40,6 +40,7 @@ public class Rental {
 
     @NotNull
     private LocalDate createdAt;
+
     @NotNull
     private LocalDate updatedAt;
 

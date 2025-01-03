@@ -16,7 +16,9 @@ import java.time.LocalDate;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
+
     private final RentalService rentalService;
+
     private final UserService userService;
 
     public MessageServiceImpl(MessageRepository messageRepository, RentalService rentalService, UserService userService) {
@@ -28,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Message sendMessage(MessageDto messageDto) throws ResourceNotFoundException {
-        log.info("Try sending message for rental with id {} by user with id {}", messageDto.getRentalId(),messageDto.getUserId());
+        log.info("Try sending message for rental with id {} by user with id {}", messageDto.getRentalId(), messageDto.getUserId());
         Rental rental = this.rentalService.getRentalById(messageDto.getRentalId());
         User user = this.userService.getUserById(messageDto.getUserId());
         LocalDate now = LocalDate.now();
