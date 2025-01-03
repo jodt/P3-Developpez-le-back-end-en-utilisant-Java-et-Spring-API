@@ -71,7 +71,7 @@ spring.datasource.url=jdbc:mysql://localhost:3306/chatop?createDatabaseIfNotExis
   ```
   export DB_PASSWORD=your_password 
   ```
-  warning: Replace "your_username" with your database username and "your_password" with your database password
+  :warning: Replace "your_username" with your database username and "your_password" with your database password
 <br></br>
 - Launch the application with these commands:
   <br></br>
