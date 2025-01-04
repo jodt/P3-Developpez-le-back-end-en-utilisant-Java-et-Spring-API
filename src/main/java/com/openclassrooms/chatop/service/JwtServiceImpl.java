@@ -21,7 +21,6 @@ public class JwtServiceImpl implements JwtService {
     private final JwtEncoder jwtEncoder;
 
     public JwtServiceImpl(JwtEncoder jwtEncoder) {
-
         this.jwtEncoder = jwtEncoder;
     }
 

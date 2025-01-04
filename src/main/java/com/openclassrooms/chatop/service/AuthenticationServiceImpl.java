@@ -12,7 +12,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-
     public AuthenticationServiceImpl(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
