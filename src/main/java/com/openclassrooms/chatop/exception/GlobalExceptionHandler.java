@@ -19,13 +19,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnauthorizedActionException.class)
     public ResponseEntity<Void> handleUnauthorizedActionException(UnauthorizedActionException ex) {
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
     public ResponseEntity<ResponseDto> handleUserAlreadyRegisteredException(UserAlreadyRegisteredException ex) {
         ResponseDto response = ResponseDto.builder().message("user already registered").build();
-        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
